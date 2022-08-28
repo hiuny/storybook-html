@@ -1,7 +1,10 @@
+import { previewTemplate } from "storybook-addon-preview";
+import { withRenderCallback } from "../.storybook/callback-addon/decorators";
 import './boot_app.css'
 import './appshell.css'
 import './index.css'
 import './baito.css';
+import { createButton } from './Button'
 
 export default {
   title: 'Line Collection/Baito',
@@ -235,11 +238,22 @@ const Template = () => {
 export const Baito = Template.bind({})
 Baito.parameters = {
   preview: [
-      {
-          tab: 'HTML',
-          template: html,
-          language: 'html',
-          copy: true,
-      },
+    {
+      tab: 'HTML',
+      template: html,
+      language: 'html',
+      copy: true,
+    },
+    {
+      tab: 'JS',
+      template: createButton.toString(),
+      language: 'js',
+      copy: true
+    }
   ],
 };
+Baito.decorators = [
+  withRenderCallback('#root span.tag.type_red', (element, context) => {
+      console.log(element, context)
+    }),
+];
